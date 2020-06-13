@@ -1,17 +1,23 @@
 package org.ronquilloaeon.domain
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.io.File
 import kotlin.random.Random
 
 class QuoteRepository {
-    private val quotes = arrayOf(
-        "The way to get started is to quit talking and begin doing.",
-        "If life were predictable it would cease to be life, and be without flavor.",
-        "Life is what happens when you're busy making other plans.",
-        "Whoever is happy will make others happy too.",
-        "Distraction is the enemy of vision."
-    )
+    private val fileName = "quotes.json"
 
-    fun getRandom() : String {
+    // See https://medium.com/@hissain.khan/parsing-with-google-gson-library-in-android-kotlin-7920e26f5520
+    private fun loadFromFile() : List<Quote>{
+        val fileContents = File(fileName).readText()
+        val gson = Gson()
+        val sType = object : TypeToken<List<Quote>>() { }.type
+        return gson.fromJson<List<Quote>>(fileContents, sType)
+    }
+
+    fun getRandom() : Quote {
+        val quotes = loadFromFile()
         return quotes[Random.nextInt(quotes.size - 1)]
     }
 }
