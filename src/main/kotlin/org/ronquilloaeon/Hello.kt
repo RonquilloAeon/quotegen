@@ -1,5 +1,7 @@
 package org.ronquilloaeon
 
+import org.ronquilloaeon.domain.QuoteRepository
+
 fun main(args: Array<String>) {
-    println("Hello, World")
+    println("Your random quote is '${QuoteRepository().getRandom()}'")
 }
